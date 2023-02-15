@@ -1,0 +1,6 @@
+#!/bin/sh
+[ -z "$LD_PRELOAD" ] || { echo "$0: not compatible with LD_PRELOAD" >&2; exit 110; }
+export GNUTLS_SYSTEM_PRIORITY_FILE="${GNUTLS_SYSTEM_PRIORITY_FILE-/opt/scylladb/libreloc/gnutls.config}"
+export LD_LIBRARY_PATH="/opt/scylladb/libreloc"
+export UBSAN_OPTIONS="suppressions=/opt/scylladb/libexec/ubsan-suppressions.supp"
+exec -a "$0" "/opt/scylladb/libexec/scylla" "$@"

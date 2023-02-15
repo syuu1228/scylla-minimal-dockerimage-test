@@ -1,0 +1,30 @@
+diff --git a/scripts/create-relocatable-package.py b/scripts/create-relocatable-package.py
+index 8b62a616d6..8b018bf3bd 100755
+--- a/scripts/create-relocatable-package.py
++++ b/scripts/create-relocatable-package.py
+@@ -79,15 +79,16 @@ executables_scylla = [
+                 'build/{}/iotune'.format(args.mode)]
+ executables_distrocmd = [
+                 '/usr/bin/patchelf',
+-                '/usr/bin/lscpu',
+-                '/usr/bin/gawk',
+-                '/usr/bin/gzip',
+-                '/usr/sbin/ifconfig',
+-                '/usr/sbin/ethtool',
+-                '/usr/bin/netstat',
+-                '/usr/bin/hwloc-distrib',
+-                '/usr/bin/hwloc-calc',
+-                '/usr/bin/lsblk']
++#                '/usr/bin/lscpu',
++#                '/usr/bin/gawk',
++#                '/usr/bin/gzip',
++#                '/usr/sbin/ifconfig',
++#                '/usr/sbin/ethtool',
++#                '/usr/bin/netstat',
++#                '/usr/bin/hwloc-distrib',
++#                '/usr/bin/hwloc-calc',
++#                '/usr/bin/lsblk']
++]
+ 
+ executables = executables_scylla + executables_distrocmd
+ 
