@@ -1,15 +1,13 @@
-FROM gcr.io/distroless/static:latest
+FROM docker.io/scylladb/scylla:latest as scylla
+FROM docker.io/busybox:uclibc as busybox
 
-COPY scylla-root/etc/scylla /etc/scylla
-COPY scylla-root/opt/scylladb /opt/scylladb
-COPY scylla-root/var/lib/scylla /var/lib/scylla
+FROM gcr.io/distroless/java11-debian11:latest
 
-EXPOSE 9042
-EXPOSE 10942
-EXPOSE 9160
-EXPOSE 10000
-ENV GNUTLS_SYSTEM_PRIORITY_FILE="/opt/scylladb/libreloc/gnutls.config"
-ENV LD_LIBRARY_PATH="/opt/scylladb/libreloc"
-ENV UBSAN_OPTIONS="suppressions=/opt/scylladb/libexec/ubsan-suppressions.supp"
+COPY --from=scylla /opt/scylladb/jmx /opt/scylladb/jmx
+COPY --from=busybox /bin/sh /bin/sh
+COPY --from=busybox /bin/hostname /bin/hostname
+COPY --from=busybox /bin/cat /bin/cat
 
-ENTRYPOINT ["/opt/scylladb/libexec/scylla", "--options-file", "/etc/scylla/scylla.yaml", "--log-to-stdout", "1", "--default-log-level", "info", "--network-stack", "posix", "--developer-mode", "1"]
+EXPOSE 7199
+
+ENTRYPOINT ["/bin/sh", "/opt/scylladb/jmx/scylla-jmx", "-l", "/opt/scylladb/jmx"]
