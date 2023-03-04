@@ -1,8 +1,13 @@
+FROM docker.io/scylladb/scylla:latest as scylla
+
 FROM gcr.io/distroless/static:latest
 
-COPY scylla-root/etc/scylla /etc/scylla
-COPY scylla-root/opt/scylladb /opt/scylladb
-COPY scylla-root/var/lib/scylla /var/lib/scylla
+COPY --from=scylla /etc/scylla /etc/scylla
+COPY --from=scylla /var/lib/scylla /var/lib/scylla
+COPY --from=scylla /opt/scylladb/api /opt/scylladb/api
+COPY --from=scylla /opt/scylladb/libexec /opt/scylladb/libexec
+COPY --from=scylla /opt/scylladb/libreloc /opt/scylladb/libreloc
+COPY --from=scylla /opt/scylladb/swagger-ui /opt/scylladb/swagger-ui
 
 EXPOSE 9042
 EXPOSE 10942
