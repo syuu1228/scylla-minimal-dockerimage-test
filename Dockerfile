@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/base:latest
+FROM gcr.io/distroless/static:latest
 
 COPY scylla-root/etc/scylla /etc/scylla
 COPY scylla-root/opt/scylladb /opt/scylladb
